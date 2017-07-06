@@ -25,33 +25,45 @@ bantime  = 31536000
 
 3. Restart Fail2ban service
 
-    service fail2ban restart
+```bash
+service fail2ban restart
+```
 
 Checking
 --------
 
 For check filter activity (new filter must be in jails list)
 
-    fail2ban-client status
+```bash
+fail2ban-client status
+```
 
 For view info about filter
 
-    fail2ban-client status <filter_name>
+```bash
+fail2ban-client status <filter_name>
+```
 
 Example:
 
-    fail2ban-client status sshd-repeater
+```bash
+fail2ban-client status sshd-repeater
+```
 
 Unban IP
 --------
 
 For unban certain IP
 
-    fail2ban-client set <filter_name> unbanip <IP>
+```bash
+fail2ban-client set <filter_name> unbanip <IP>
+```
 
 Example:
 
-    fail2ban-client set sshd-repeater unbanip 123.123.123.123
+```bash
+fail2ban-client set sshd-repeater unbanip 123.123.123.123
+```
 
 Unbanned IP automatically deleted from ip.blocklist.<name>.
 

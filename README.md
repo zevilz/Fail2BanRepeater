@@ -2,6 +2,11 @@
 
 Fail2Ban action for ban IPs for a long time. Banned ips register in /etc/fail2ban/ip.blocklist.<name> and re-populate iptables after fail2ban/system restart. I recommend to use this action in new filters as addition to the existing filters against brute force.
 
+Requirements
+------------
+
+- fail2ban v.0.9+
+
 Configuring
 -----------
 1. Put **iptables-repeater.conf** to **/etc/fail2ban/action.d/** directory.

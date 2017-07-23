@@ -5,13 +5,26 @@ Fail2Ban action for ban IPs for a long time. Banned ips register in /etc/fail2ba
 Requirements
 ------------
 
-- fail2ban v.0.9+
+- fail2ban v. 0.8.x/0.9.x
 
 Configuring
 -----------
 1. Put **iptables-repeater.conf** to **/etc/fail2ban/action.d/** directory.
 
-2. Add new filter in **/etc/fail2ban/jail.conf** or **/etc/fail2ban/jail.local** (in v.0.9+) and add in action **iptables-repeater[name=<filter_name>]**, where **<filter_name>** is any name (uses in iptables chain and ips list name). Also set **maxretry** more than common filter and big **findtime** and **bantime**.
+2. Add new filter in **/etc/fail2ban/jail.conf** or **/etc/fail2ban/jail.local** (in v.0.9.x) like below
+
+```bash
+[<filter_name>]
+enabled  = true
+port     = <port>
+logpath  = <log_path>
+action   = iptables-repeater[name=<name_in_chain>, port="<port>", protocol="tcp", chain="%(chain)s", actname=%(banaction)s-tcp]
+           %(mta)s-whois[name=%(__name__)s, dest="%(destemail)s"]
+filter   = <filter_name>
+maxretry = <maxretry>
+findtime = <findtime>
+bantime  = <bantime>
+```
 
 Example:
 
@@ -20,7 +33,7 @@ Example:
 enabled  = true
 port     = 1234
 logpath  = %(sshd_log)s
-action   = iptables-repeater[name=sshd]
+action   = iptables-repeater[name=sshd, port="1234", protocol="tcp", chain="%(chain)s", actname=%(banaction)s-tcp]
            %(mta)s-whois[name=%(__name__)s, dest="%(destemail)s"]
 filter   = sshd
 maxretry = 13
@@ -28,11 +41,7 @@ findtime = 31536000
 bantime  = 31536000
 ```
 
-3. Restart Fail2ban service
-
-```bash
-service fail2ban restart
-```
+3. Restart Fail2ban.
 
 Checking
 --------
@@ -75,4 +84,5 @@ Unbanned IP automatically deleted from ip.blocklist.<name>.
 Changelog
 ---------
 
-- 06.07.2017 - 1.0.0 - released
+- 23.07.2017 - 1.1.0 - Bug fixes. Added multiport support and action for legacy versions (0.8.x).
+- 06.07.2017 - 1.0.0 - Released

@@ -11,7 +11,7 @@ Configuring
 -----------
 1. Put **iptables-repeater.conf** to **/etc/fail2ban/action.d/** directory.
 
-2. Add new filter in **/etc/fail2ban/jail.conf** or **/etc/fail2ban/jail.local** (in v.0.9.x) like below
+2. Add new filter in **/etc/fail2ban/jail.conf** or **/etc/fail2ban/jail.local** like below
 
 ```bash
 [<filter_name>]
